@@ -1,0 +1,195 @@
+<div class="d-flex align-items-center justify-content-center py-5 bg-light min-vh-100">
+    <div class="glass-card shadow-lg p-4 p-md-5 bg-white border-0 fade-in"
+        style="max-width: 950px; width: 95%; border-radius: 30px;">
+
+        <div class="mb-5 text-center">
+            <div class="bg-primary text-white d-inline-block p-3 rounded-circle mb-3 shadow-sm">
+                <i class="bi"
+                    [ngClass]="isViewMode ? 'bi-eye-fill' : (isEditMode ? 'bi-pencil-square' : 'bi-plus-circle-fill')"
+                    style="font-size: 2rem;"></i>
+            </div>
+            <h2 class="fw-bold text-dark mb-1">
+                {{ isViewMode ? 'Record Details' : (isEditMode ? 'Edit Record' : 'Add New Record') }}
+            </h2>
+            <p class="text-muted small">
+                {{ isViewMode ? 'Reviewing stored information' : 'Please complete all required fields marked with (*)'
+                }}
+            </p>
+        </div>
+
+        <form [formGroup]="recordForm" (ngSubmit)="onSubmit()">
+
+            <div class="row g-4 mb-5">
+                <div class="col-12 border-bottom border-light pb-2 mb-2">
+                    <h5 class="fw-bold text-primary d-flex align-items-center">
+                        <i class="bi bi-vinyl-fill me-2"></i> Record Information
+                    </h5>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold text-secondary">Title *</label>
+                    <input formControlName="title"
+                        class="form-control form-control-lg fs-6 shadow-sm border-light-subtle rounded-3"
+                        [class.is-invalid]="recordForm.get('title')?.invalid && recordForm.get('title')?.touched"
+                        placeholder="Enter album title">
+                    <div class="text-danger small mt-1"
+                        *ngIf="recordForm.get('title')?.invalid && recordForm.get('title')?.touched">
+                        Title is required
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold text-secondary">Artist Name *</label>
+                    <input formControlName="artist"
+                        class="form-control form-control-lg fs-6 shadow-sm border-light-subtle rounded-3"
+                        [class.is-invalid]="recordForm.get('artist')?.invalid && recordForm.get('artist')?.touched"
+                        placeholder="Enter artist name">
+                    <div class="text-danger small mt-1"
+                        *ngIf="recordForm.get('artist')?.invalid && recordForm.get('artist')?.touched">
+                        Artist name is required
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold text-secondary">Format *</label>
+                    <select formControlName="format"
+                        class="form-select form-select-lg fs-6 shadow-sm border-light-subtle rounded-3"
+                        [class.is-invalid]="recordForm.get('format')?.invalid && recordForm.get('format')?.touched">
+                        <option value="" disabled>-Choose Format-</option>
+                        <option value="Vinyl">Vinyl</option>
+                        <option value="CD">CD</option>
+                        <option value="Digital">Digital</option>
+                    </select>
+                    <div class="text-danger small mt-1"
+                        *ngIf="recordForm.get('format')?.invalid && recordForm.get('format')?.touched">
+                        Please select a format
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold text-secondary">Genre *</label>
+                    <input formControlName="genre"
+                        class="form-control form-control-lg fs-6 shadow-sm border-light-subtle rounded-3"
+                        [class.is-invalid]="recordForm.get('genre')?.invalid && recordForm.get('genre')?.touched"
+                        placeholder="e.g. Rock, Jazz">
+                    <div class="text-danger small mt-1"
+                        *ngIf="recordForm.get('genre')?.invalid && recordForm.get('genre')?.touched">
+                        Genre is required
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold text-secondary">Release Year *</label>
+                    <input formControlName="releaseYear"
+                        class="form-control form-control-lg fs-6 shadow-sm border-light-subtle rounded-3"
+                        [class.is-invalid]="recordForm.get('releaseYear')?.invalid && recordForm.get('releaseYear')?.touched"
+                        placeholder="1950">
+                    <div class="text-danger small mt-1"
+                        *ngIf="recordForm.get('releaseYear')?.invalid && recordForm.get('releaseYear')?.touched">
+                        Required (min 1900)
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold text-secondary">Price ($) *</label>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text bg-light border-light-subtle">$</span>
+                        <input formControlName="price"
+                            class="form-control form-control-lg fs-6 shadow-sm border-light-subtle rounded-end-3"
+                            [class.is-invalid]="recordForm.get('price')?.invalid && recordForm.get('price')?.touched"
+                            placeholder="0.00">
+                        <div class="text-danger small mt-1 w-100"
+                            *ngIf="recordForm.get('price')?.invalid && recordForm.get('price')?.touched">
+                            Price is required (min 0)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold text-secondary">Stock Quantity *</label>
+                    <input formControlName="stockQty"
+                        class="form-control form-control-lg fs-6 shadow-sm border-light-subtle rounded-3"
+                        [class.is-invalid]="recordForm.get('stockQty')?.invalid && recordForm.get('stockQty')?.touched"
+                        placeholder="0">
+                    <div class="text-danger small mt-1"
+                        *ngIf="recordForm.get('stockQty')?.invalid && recordForm.get('stockQty')?.touched">
+                        Stock is required (min 0)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <div class="col-12 border-bottom border-light pb-2 mb-2">
+                    <h5 class="fw-bold text-primary d-flex align-items-center">
+                        <i class="bi bi-person-badge-fill me-2"></i> Customer Details
+                    </h5>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold text-secondary">First Name *</label>
+                    <input formControlName="customerFirstName"
+                        class="form-control form-control-lg fs-6 shadow-sm border-light-subtle rounded-3"
+                        [class.is-invalid]="recordForm.get('customerFirstName')?.invalid && recordForm.get('customerFirstName')?.touched"
+                        placeholder="John">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label small fw-bold text-secondary">Last Name *</label>
+                    <input formControlName="customerLastName"
+                        class="form-control form-control-lg fs-6 shadow-sm border-light-subtle rounded-3"
+                        [class.is-invalid]="recordForm.get('customerLastName')?.invalid && recordForm.get('customerLastName')?.touched"
+                        placeholder="Doe">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold text-secondary">Customer ID *</label>
+                    <input formControlName="customerId"
+                        class="form-control form-control-lg fs-6 shadow-sm border-light-subtle rounded-3"
+                        [class.is-invalid]="recordForm.get('customerId')?.invalid && recordForm.get('customerId')?.touched"
+                        placeholder="12345A">
+                    <div class="text-danger small mt-1"
+                        *ngIf="recordForm.get('customerId')?.invalid && recordForm.get('customerId')?.touched">
+                        Format: digits + letter
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold text-secondary">Contact Number *</label>
+                    <input formControlName="customerContact"
+                        class="form-control form-control-lg fs-6 shadow-sm border-light-subtle rounded-3"
+                        [class.is-invalid]="recordForm.get('customerContact')?.invalid && recordForm.get('customerContact')?.touched"
+                        placeholder="12345678">
+                    <div class="text-danger small mt-1"
+                        *ngIf="recordForm.get('customerContact')?.invalid && recordForm.get('customerContact')?.touched">
+                        At least 8 digits
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold text-secondary">Email Address *</label>
+                    <input type="email" formControlName="customerEmail"
+                        class="form-control form-control-lg fs-6 shadow-sm border-light-subtle rounded-3"
+                        [class.is-invalid]="recordForm.get('customerEmail')?.invalid && recordForm.get('customerEmail')?.touched"
+                        placeholder="email@example.com">
+                    <div class="text-danger small mt-1"
+                        *ngIf="recordForm.get('customerEmail')?.invalid && recordForm.get('customerEmail')?.touched">
+                        Valid email required
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-column flex-md-row gap-3 justify-content-center pt-4 border-top">
+                <button *ngIf="!isViewMode" type="submit" [disabled]="recordForm.invalid"
+                    class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold shadow-sm order-md-2">
+                    <i class="bi bi-check-circle me-2"></i> {{ isEditMode ? 'Update Record' : 'Save Record' }}
+                </button>
+
+                <button type="button" (click)="goBack()"
+                    class="btn btn-outline-secondary btn-lg px-5 py-3 rounded-pill fw-bold order-md-1">
+                    <i class="bi bi-arrow-left me-2"></i> {{ isViewMode ? 'Return to List' : 'Cancel' }}
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

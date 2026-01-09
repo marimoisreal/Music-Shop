@@ -1,0 +1,68 @@
+<div class="glass-card shadow-lg p-4 bg-white mx-auto" style="max-width: 1100px; border-radius: 25px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold m-0">Music Inventory</h2>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr class="text-muted small text-uppercase">
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Customer ID</th>
+                    <th>Artist</th>
+                    <th>Format</th>
+                    <th>Genre</th>
+                    <th>Stock Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let record of records">
+                    <td>{{ record.id }}</td>
+                    <td class="fw-bold">{{ record.title }}</td>
+                    <td>{{ record.customerId || 'N/A' }}</td>
+                    <td>{{ record.artist }}</td>
+                    <td><span class="badge bg-light text-dark border">{{ record.format }}</span></td>
+                    <td>{{ record.genre }}</td>
+                    <td>
+                        <span [ngClass]="{
+                        'text-success': record.stockQty > 3,
+                        'text-warning': record.stockQty >= 1 && record.stockQty <= 3,
+                        'text-danger': record.stockQty <= 0
+                    }" class="fw-bold small">
+                            {{ record.stockQty | stockStatus }}
+                        </span>
+                    </td>
+                    <td class="text-end">
+                        <div class="d-inline-block" style="min-width: 160px;">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <a [routerLink]="['/view-record', record.id]"
+                                        class="btn btn-sm btn-outline-secondary w-100 rounded-3 shadow-sm py-1">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <button *ngIf="authService.currentUserValue?.role === 'admin'"
+                                        (click)="deleteRecord(record.id)"
+                                        class="btn btn-sm btn-outline-danger w-100 rounded-3 shadow-sm py-1">
+                                        <i class="bi bi-trash"></i> Del
+                                    </button>
+                                </div>
+
+                                <div class="col-12"
+                                    *ngIf="authService.currentUserValue?.role === 'admin' || authService.currentUserValue?.role === 'manager'">
+                                    <a [routerLink]="['/edit-record', record.id]"
+                                        class="btn btn-sm btn-primary w-100 rounded-3 shadow-sm py-2 fw-bold text-white">
+                                        <i class="bi bi-pencil-square me-1"></i> Update Record
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="login-card shadow-lg p-4 p-md-5 bg-white border mx-auto"
+    style="width: 100%; max-width: 450px; border-radius: 20px;">
+    <div class="text-center mb-4">
+        <div class="bg-primary text-white d-inline-block p-3 rounded-circle mb-3 shadow-sm">
+            <i class="bi bi-person-badge fs-2"></i>
+        </div>
+        <h2 style="color: #003366; font-weight: 700;" class="mb-1">Record Shop</h2>
+        <p class="text-muted small">Inventory Management System</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label class="form-label small fw-bold text-secondary">Email address</label>
+            <input type="email" formControlName="email"
+                class="form-control form-control-lg fs-6 py-2 shadow-sm border-light-subtle"
+                placeholder="admin@recordshop.com">
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label small fw-bold text-secondary">Password</label>
+            <input type="password" formControlName="password"
+                class="form-control form-control-lg fs-6 py-2 shadow-sm border-light-subtle" placeholder="••••••••">
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid"
+            class="btn w-100 py-3 text-white fw-bold shadow-sm transition-all"
+            style="background-color: #007bff; border-radius: 10px;">
+            Sign In <i class="bi bi-box-arrow-in-right ms-2"></i>
+        </button>
+    </form>
+
+    <div class="mt-4 p-3 border border-primary-subtle rounded-3" style="background-color: #eef6ff;">
+        <h6 class="small fw-bold text-primary mb-2">Test accounts:</h6>
+        <ul class="list-unstyled mb-0" style="font-size: 0.8rem; color: #555; line-height: 1.6;">
+            <li><strong>Admin:</strong> admin&#64;recordshop.com</li>
+            <li><strong>Manager:</strong> manager&#64;recordshop.com</li>
+            <li><strong>Sales:</strong> sales&#64;recordshop.com</li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="main-wrapper" *ngIf="authService.currentUserValue; else loginLayout">
+  <div class="container main-content shadow-sm py-4" style="max-width: 1100px;">
+    <header class="content-header d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+      <div>
+        <h1 class="brand-title fw-bold text-primary m-0">Record Store</h1>
+        <p class="brand-subtitle text-muted small m-0">Management Portal</p>
+      </div>
+
+      <div class="user-pill d-flex align-items-center bg-light border rounded-pill px-3 py-2">
+        <div class="user-info me-3 text-end">
+          <span class="user-name d-block fw-bold small">{{ authService.currentUserValue?.name }}</span>
+          <span class="user-role badge bg-primary" style="font-size: 0.7rem;">{{ authService.currentUserValue?.role
+            }}</span>
+        </div>
+        <button (click)="onLogout()" class="btn btn-sm btn-outline-danger rounded-pill px-3">Logout</button>
+      </div>
+    </header>
+
+    <nav class="nav nav-pills gap-3 mb-4">
+      <a routerLink="/login" routerLinkActive="active" class="nav-link border shadow-sm px-4">
+        <i class="bi bi-person-lock me-2"></i>Switch Account
+      </a>
+      <a routerLink="/records" routerLinkActive="active" class="nav-link border shadow-sm px-4">
+        <i class="bi bi-collection me-2"></i>Inventory
+      </a>
+
+      <a routerLink="/add-records" routerLinkActive="active" class="nav-link border shadow-sm px-4">
+        <i class="bi bi-plus-circle me-2"></i>Add Record
+      </a>
+
+    </nav>
+
+    <main class="page-body bg-white rounded-4 p-4 shadow-sm">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+
+<ng-template #loginLayout>
+  <div class="d-flex align-items-center justify-content-center vh-100 bg-light">
+    <div class="login-card shadow-lg p-4 bg-white" style="width: 100%; max-width: 420px; border-radius: 20px;">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</ng-template>
